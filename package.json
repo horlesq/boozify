@@ -1,0 +1,19 @@
+{
+  "name": "boozify",
+  "version": "1.0.0",
+  "description": "Cocktail recipe web application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Horlescu Adrian",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "core-js": "^3.38.1",
+    "regenerator-runtime": "^0.14.1"
+  }
+}
