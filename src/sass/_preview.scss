@@ -42,7 +42,7 @@
         $color-grad-1,
         $color-grad-2
       );
-      opacity: 0.4;
+      opacity: 0.2;
     }
 
     img {
@@ -76,6 +76,9 @@
     overflow: hidden;
   }
 
+  &__publisher {
+    color: $color-grey-dark-1;
+  }
 
   &__user-generated {
     background-color: darken($color-grey-light-2, 2%);

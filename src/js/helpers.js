@@ -12,9 +12,9 @@ export const getJSON = async function (url) {
   try {
     const response = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
     const data = await response.json();
-    if (!data.drinks) throw new Error(`Drink does not exist`);
+    if (!data.drinks) throw new Error(`Cocktail recipe does not exist!`);
     return data;
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
 };

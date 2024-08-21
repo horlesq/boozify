@@ -3,11 +3,15 @@ import { getJSON } from './helpers.js';
 
 export const state = {
   recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
 };
 
-// Format API ingridients
-const formatIngridients = function (apiData) {
-  const ingredients = [];
+// Format API recipe fields
+const formatRecipe = function (apiData) {
+  const formatedIngredients = [];
 
   for (let i = 1; i <= 15; i++) {
     const ingredient = apiData[`strIngredient${i}`];
@@ -25,7 +29,7 @@ const formatIngridients = function (apiData) {
         unit = measureParts.slice(1).join(' ');
       }
 
-      ingredients.push({
+      formatedIngredients.push({
         quantity: quantity,
         unit: unit,
         description: description,
@@ -33,26 +37,38 @@ const formatIngridients = function (apiData) {
     }
   }
 
-  return ingredients;
+  return {
+    id: apiData.idDrink,
+    title: apiData.strDrink,
+    image: apiData.strDrinkThumb,
+    alcoholic: apiData.strAlcoholic,
+    glass: apiData.strGlass,
+    instructions: apiData.strInstructions,
+    ingredients: formatedIngredients,
+  };
 };
 
 // Load recipe from TheCocktailDB API and update state.recipe
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await getJSON(`${API_URL}lookup.php?i=${id}`);
 
     const recipe = data.drinks[0];
-    state.recipe = {
-      id: recipe.idDrink,
-      title: recipe.strDrink,
-      image: recipe.strDrinkThumb,
-      alcoholic: recipe.strAlcoholic,
-      glass: recipe.strGlass,
-      instructions: recipe.strInstructions,
-      ingredients: formatIngridients(recipe),
-    };
-  } catch (err) {
-    // alert(err);
-    console.error(`${err} 🎇🎇`);
+    state.recipe = formatRecipe(recipe);
+  } catch (error) {
+    console.error(`${error} 🧨`);
+    throw error;
+  }
+};
+
+export const loadSearchResults = async function (query) {
+  try {
+    state.search.query = query;
+    const data = await getJSON(`${API_URL}search.php?s=${query}`);
+
+    state.search.results = data.drinks.map(recipe => formatRecipe(recipe));
+  } catch (error) {
+    console.error(`${error} 🧨🧨🧨`);
+    throw error;
   }
 };
