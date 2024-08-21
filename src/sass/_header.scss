@@ -17,7 +17,7 @@
   border-radius: 10rem;
   display: flex;
   align-items: center;
-  padding-left: 3rem;
+  padding-left: 0.5rem;
   transition: all 0.3s;
 
   &:focus-within {
@@ -26,6 +26,7 @@
   }
 
   &__field {
+    text-align: center;
     border: none;
     background: none;
     font-family: inherit;
@@ -53,6 +54,11 @@
   &__btn {
     font-weight: 600;
     font-family: inherit;
+    background-image: linear-gradient(
+      to right bottom,
+      $color-grad-1,
+      $color-grad-3
+    );
   }
 }
 
