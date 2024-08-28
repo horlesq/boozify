@@ -67,6 +67,7 @@
   &__details {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 7.5rem 8rem 3.5rem 8rem;
   }
 
@@ -82,7 +83,7 @@
   }
 
   &__info-icon {
-    height: 2.35rem;
+    height: 5rem;
     width: 2.35rem;
     fill: $color-primary;
     margin-right: 1.15rem;

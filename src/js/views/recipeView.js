@@ -6,7 +6,6 @@ class RecipeView extends View {
   _errorMessage =
     'We could not find that cocktail recipe. Please try another one!';
   _successMessage = '';
-
   _generateHtml() {
     return `
         <figure class="recipe__fig">
@@ -20,37 +19,19 @@ class RecipeView extends View {
         <div class="recipe__details">
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="${icons}#icon-clock"></use>
+              <use href="${icons}#icon-drink"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">${
               this._data.alcoholic
             }</span>
             <span class="recipe__info-text">drink</span>
           </div>
-          <div class="recipe__info">
-            <svg class="recipe__info-icon">
-              <use href="${icons}#icon-users"></use>
-            </svg>
-            <span class="recipe__info-data recipe__info-data--people">4</span>
-            <span class="recipe__info-text">servings</span>
 
-            <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--increase-servings">
-                <svg>
-                  <use href="${icons}#icon-minus-circle"></use>
-                </svg>
-              </button>
-              <button class="btn--tiny btn--increase-servings">
-                <svg>
-                  <use href="${icons}#icon-plus-circle"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <button class="btn--round">
+          <button class="btn--round btn--favorite">
             <svg class="">
-              <use href="${icons}#icon-bookmark-fill"></use>
+            <use href="${icons}#icon-favorite${
+      this._data.favorite === true ? '-fill' : ''
+    }"></use>
             </svg>
           </button>
         </div>
@@ -92,6 +73,14 @@ class RecipeView extends View {
     ['hashchange', 'load'].forEach(event =>
       window.addEventListener(event, handler)
     );
+  }
+
+  addHandlerAddFavorite(handler) {
+    this._parentElement.addEventListener('click', function (event) {
+      const btn = event.target.closest('.btn--favorite');
+      if (!btn) return;
+      handler();
+    });
   }
 }
 

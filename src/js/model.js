@@ -1,12 +1,16 @@
 import { API_URL } from './config.js';
 import { getJSON } from './helpers.js';
+import { RES_PER_PAGE } from './config.js';
 
 export const state = {
   recipe: {},
   search: {
     query: '',
     results: [],
+    page: 1,
+    resultsPerPage: RES_PER_PAGE,
   },
+  favorites: [],
 };
 
 // Format API recipe fields
@@ -55,6 +59,10 @@ export const loadRecipe = async function (id) {
 
     const recipe = data.drinks[0];
     state.recipe = formatRecipe(recipe);
+
+    if (state.favorites.some(fav => fav.id === id))
+      state.recipe.favorite = true;
+    else state.recipe.favorite = false;
   } catch (error) {
     console.error(`${error} 🧨`);
     throw error;
@@ -72,3 +80,45 @@ export const loadSearchResults = async function (query) {
     throw error;
   }
 };
+
+export const getSearchResultsPage = function (page = state.search.page) {
+  state.search.page = page;
+
+  const start = (page - 1) * state.search.resultsPerPage;
+  const end = page * state.search.resultsPerPage;
+
+  return state.search.results.slice(start, end);
+};
+
+const persistFavorites = function () {
+  localStorage.setItem('favorite', JSON.stringify(state.favorites));
+};
+
+export const addFavorite = function (recipe) {
+  // Add favorite
+  state.favorites.push(recipe);
+
+  // Mark current recipe as favorite
+  if (recipe.id === state.recipe.id) state.recipe.favorite = true;
+
+  persistFavorites();
+};
+
+export const removeFavorite = function (id) {
+  // Remove favorite
+  const index = state.favorites.findIndex(el => el.id === id);
+  state.favorites.splice(index, 1);
+
+  // Mark current recipe as NOT favorite
+  if (id === state.recipe.id) state.recipe.favorite = false;
+
+  persistFavorites();
+};
+
+const init = function () {
+  const storage = localStorage.getItem('favorite');
+  if (storage) state.favorites = JSON.parse(storage);
+};
+
+init();
+console.log(state.favorites);

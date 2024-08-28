@@ -3,14 +3,44 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
     this._data = data;
     const html = this._generateHtml();
+
+    if (!render) return html;
+
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', html);
+  }
+
+  update(data) {
+    this._data = data;
+    const newHtml = this._generateHtml();
+
+    const newDOM = document.createRange().createContextualFragment(newHtml);
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+
+    newElements.forEach((newEl, idx) => {
+      const curEl = curElements[idx];
+      // Updating text
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEl.textContent;
+      }
+
+      // Updating attributes
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+      }
+    });
   }
 
   _clear() {
