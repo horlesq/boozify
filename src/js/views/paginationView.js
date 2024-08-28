@@ -4,6 +4,11 @@ import icons from 'url:../../img/icons.svg';
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
+  /**
+   * Generate HTML markup for the pagination buttons based on the current page and total pages
+   * @returns {string} A string of HTML markup for pagination buttons
+   * @this {Object} PaginationView instance
+   */
   _generateHtml() {
     const curPage = this._data.page;
     const numPages = Math.ceil(
@@ -61,7 +66,11 @@ class PaginationView extends View {
     return '';
   }
 
-  // Previos or Next page click handler
+  /**
+   * Attach an event handler to the pagination buttons for navigating between pages
+   * @param {Function} handler The function to call when a pagination button is clicked
+   * @this {Object} PaginationView instance
+   */
   addHandlerPagination(handler) {
     this._parentElement.addEventListener('click', function (event) {
       const btn = event.target.closest('.btn--inline');

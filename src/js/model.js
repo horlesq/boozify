@@ -13,7 +13,13 @@ export const state = {
   favorites: [],
 };
 
-// Format API recipe fields
+/**
+ * Formats API recipe data into a structured recipe object
+ * - Extracts and formats ingredients
+ * - Creates a structured recipe object with relevant fields
+ * @param {Object} apiData - The raw recipe data from the API
+ * @returns {Object} The formatted recipe object
+ */
 const formatRecipe = function (apiData) {
   const formatedIngredients = [];
 
@@ -52,10 +58,20 @@ const formatRecipe = function (apiData) {
   };
 };
 
-// Load recipe from TheCocktailDB API and update state.recipe
+/**
+ * Loads a recipe from TheCocktailDB API and updates the state.recipe object
+ * - Retrieves recipe data based on ID or gets a random recipe
+ * - Formats the recipe data and updates the state
+ * - Marks the recipe as favorite if it exists in the favorites list
+ * @async
+ * @param {string} [id] - The ID of the recipe to be loaded (optional for random recipe)
+ * @throws {Error} Throws an error if the recipe cannot be loaded
+ */
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}lookup.php?i=${id}`);
+    const data = id
+      ? await getJSON(`${API_URL}lookup.php?i=${id}`)
+      : await getJSON(`${API_URL}random.php`); // No id - random recipe
 
     const recipe = data.drinks[0];
     state.recipe = formatRecipe(recipe);
@@ -69,6 +85,13 @@ export const loadRecipe = async function (id) {
   }
 };
 
+/**
+ * Loads search results from TheCocktailDB API based on the search query
+ * - Updates the state.search.results with formatted recipe data
+ * @async
+ * @param {string} query - The search query for fetching recipes
+ * @throws {Error} Throws an error if the search results cannot be loaded
+ */
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
@@ -81,6 +104,12 @@ export const loadSearchResults = async function (query) {
   }
 };
 
+/**
+ * Gets a specific page of search results
+ * - Calculates the slice based on the current page and results per page
+ * @param {number} [page=state.search.page] - The page number to retrieve
+ * @returns {Object[]} A list of recipes for the specified page
+ */
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
 
@@ -90,10 +119,21 @@ export const getSearchResultsPage = function (page = state.search.page) {
   return state.search.results.slice(start, end);
 };
 
+/**
+ * Persists the favorites list in localStorage
+ * - Saves the current favorites state to localStorage
+ */
 const persistFavorites = function () {
   localStorage.setItem('favorite', JSON.stringify(state.favorites));
 };
 
+/**
+ * Adds a recipe to the favorites list and updates the current recipe state
+ * - Adds the recipe to the favorites array
+ * - Updates the favorite status of the current recipe
+ * - Persists the updated favorites list in localStorage
+ * @param {Object} recipe - The recipe to be added to favorites
+ */
 export const addFavorite = function (recipe) {
   // Add favorite
   state.favorites.push(recipe);
@@ -104,6 +144,13 @@ export const addFavorite = function (recipe) {
   persistFavorites();
 };
 
+/**
+ * Removes a recipe from the favorites list and updates the current recipe state
+ * - Removes the recipe from the favorites array
+ * - Updates the favorite status of the current recipe
+ * - Persists the updated favorites list in localStorage
+ * @param {string} id - The ID of the recipe to be removed from favorites
+ */
 export const removeFavorite = function (id) {
   // Remove favorite
   const index = state.favorites.findIndex(el => el.id === id);
@@ -115,10 +162,13 @@ export const removeFavorite = function (id) {
   persistFavorites();
 };
 
+/**
+ * Initializes the application state by loading favorites from localStorage
+ * - Retrieves and parses the favorites list from localStorage
+ */
 const init = function () {
   const storage = localStorage.getItem('favorite');
   if (storage) state.favorites = JSON.parse(storage);
 };
 
 init();
-console.log(state.favorites);

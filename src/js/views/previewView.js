@@ -1,9 +1,13 @@
 import View from './View.js';
-import icons from 'url:../../img/icons.svg';
 
 class PreviewView extends View {
   _parentElement = '';
 
+  /**
+   * Generate HTML markup for a single preview item
+   * @returns {string} A string of HTML markup for a preview
+   * @this {Object} PreviewView instance
+   */
   _generateHtml() {
     const id = window.location.hash.slice(1);
 

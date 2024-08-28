@@ -3,9 +3,18 @@ import icons from 'url:../../img/icons.svg';
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
+
   _errorMessage =
     'We could not find that cocktail recipe. Please try another one!';
   _successMessage = '';
+
+  _btnSurprise = document.querySelector('.nav__btn--surprise');
+
+  /**
+   * Generate HTML markup for the recipe details
+   * @returns {string} A string of HTML markup
+   * @this {Object} RecipeView instance
+   */
   _generateHtml() {
     return `
         <figure class="recipe__fig">
@@ -69,18 +78,34 @@ class RecipeView extends View {
         `;
   }
 
+  /**
+   * Attach event handlers to render the recipe on page load or hash change
+   * @param {Function} handler The handler function to be called
+   */
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event =>
       window.addEventListener(event, handler)
     );
   }
 
+  /**
+   * Attach event handler for adding or removing a recipe from favorites
+   * @param {Function} handler The handler function to be called on click
+   */
   addHandlerAddFavorite(handler) {
     this._parentElement.addEventListener('click', function (event) {
       const btn = event.target.closest('.btn--favorite');
       if (!btn) return;
       handler();
     });
+  }
+
+  /**
+   * Attach event handler for the "Surprise Me" button
+   * @param {Function} handler The handler function to be called on click
+   */
+  addHandlerSurprise(handler) {
+    this._btnSurprise.addEventListener('click', handler);
   }
 }
 
