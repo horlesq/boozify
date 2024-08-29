@@ -129,7 +129,6 @@ const init = function () {
   recipeView.addHandlerAddFavorite(controlAddFavorite);
   searchView.addHandlerSearch(controlSearchResults);
   paginationsView.addHandlerPagination(controlPagination);
-  console.log('Test');
 };
 
 init();
