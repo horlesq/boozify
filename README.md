@@ -33,6 +33,9 @@ Check out the live demo of the project at: [Boozify](https://boozify-horly.netli
 - **Add to Favorites**: Found a cocktail you love? Click the "Add to Favorites" button to save it for quick access later.
 - **Surprise Me!**: Feeling adventurous? Click the "Surprise Me!" button to get a random cocktail suggestion. It's a fun way to discover new drinks!
 
+  ![boozify-flowchart](https://github.com/user-attachments/assets/26812172-d5da-4f03-a22f-c65577d3f45c)
+
+
 ## Technologies
 
 - HTML5
