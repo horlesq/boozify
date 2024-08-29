@@ -38,7 +38,8 @@ Check out the live demo of the project at: [Boozify](https://boozify-horly.netli
 - HTML5
 - SASS
 - JavaScript (ES6+)
-- [TheCocktailDB API](https://www.thecocktaildb.com/)
+- [TheCocktailDB API](https://www.thecocktaildb.com/): Fetches cocktail data for the application.
+- MVC Architecture: The application follows the Model-View-Controller design pattern to separate concerns and improve code maintainability.
 
 ## Installation
 
