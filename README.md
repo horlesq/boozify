@@ -49,7 +49,7 @@ Check out the live demo of the project at: [Boozify](https://boozify-horly.netli
 To run this project locally, follow these steps:
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/your-username/boozify.git
+git clone https://github.com/horlesq/boozify.git
 ```
 2. **Navigate to the project directory**:
 ```bash
@@ -73,3 +73,7 @@ For any inquiries or feedback, feel free to reach out via:
 - Email: adrian.horlescu@gmail.com
 - Linkedin [Adrian Horlescu](https://www.linkedin.com/in/adrian-horlescu/)
 - GitHub: [Horlesq](https://github.com/horlesq)
+
+---
+
+This application is a modified version of a project teached in ['The Complete JavaScript Course 2024: From Zero to Expert!'](https://www.udemy.com/course/the-complete-javascript-course/?couponCode=ST10MT8624)
