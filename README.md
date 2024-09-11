@@ -12,6 +12,7 @@ Welcome to **Boozify**! Boozify is a web application that allows users to discov
 - [Usage](#usage)
 - [Technologies](#technologies)
 - [Installation](#installation)
+- [License](#license)
 - [Contact](#contact)
 
 
@@ -65,6 +66,8 @@ npm start
 ```
 5. Open your browser and go to http://localhost:3000 to see the application in action.
 
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 
